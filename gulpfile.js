@@ -23,7 +23,15 @@ gulp.task('css', function () {
 });
 
 
-gulp.task('serve', ['templates', 'css'], function () {
+gulp.task('images', function () {
+  var imagemin = require('gulp-imagemin');
+  return gulp.src('src/images/*')
+    .pipe(imagemin())
+    .pipe(gulp.dest('dist/images/'));
+});
+
+
+gulp.task('serve', ['templates', 'css', 'images'], function () {
   browserSync.init({
     server: {
       baseDir: './dist/'
