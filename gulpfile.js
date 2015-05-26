@@ -16,10 +16,15 @@ gulp.task('templates-watch', ['templates'], browserSync.reload.bind(browserSync)
 gulp.task('css', function () {
   var stylus = require('gulp-stylus');
   var postcss = require('gulp-postcss');
+  var plugins = [
+    require('postcss-color-function')(),
+    require('lost')(),
+    require('autoprefixer')()
+  ];
   return gulp.src('src/**/*.{styl,css}')
     .pipe(sourcemaps.init())
     .pipe(stylus())
-    .pipe(postcss([require('lost')(), require('autoprefixer')()]))
+    .pipe(postcss(plugins))
     .pipe(sourcemaps.write('dist'))
     .pipe(gulp.dest('dist'))
     .pipe(browserSync.stream({match: '**/*.css'}));
