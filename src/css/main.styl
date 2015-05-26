@@ -29,23 +29,32 @@
     height 80%
     margin 0 auto
 
+    @media (max-width: 980px)
+      font-size 0.7em
+
     .logo
-      lost-column 1/3
-      lost-align center
       text-align center
-      height 100%
+
+      @media (max-width: 739px)
+        img
+          max-width 400px
+
+      @media (min-width: 740px)
+        lost-column 1/3
+        lost-align center
+        height 100%
+
       > div
         width 100%
 
-      h1
-        background url(../images/logo-digital-inove-nome.svg) no-repeat top left
-        background-size contain
-
     .info
-      lost-column 2/3
-      lost-align vertical
-      height 100%
       text-align center
+
+      @media (min-width: 740px)
+        lost-column 2/3
+        lost-align vertical
+        height 100%
+
       .info-content
         width 100%
 
@@ -65,8 +74,10 @@
         padding 10px 20px
         color white
         text-decoration none
-        margin 0 10px
+        margin 10px
         button $cyan
         + .btn
           button $magenta
 
+        @media (max-width: 980px)
+          padding 5px 10px
