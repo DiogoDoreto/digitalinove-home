@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var browserSync = require('browser-sync').create();
+var sourcemaps = require('gulp-sourcemaps');
 
 
 gulp.task('templates', function () {
@@ -15,9 +16,11 @@ gulp.task('templates-watch', ['templates'], browserSync.reload.bind(browserSync)
 gulp.task('css', function () {
   var stylus = require('gulp-stylus');
   var postcss = require('gulp-postcss');
-  return gulp.src('src/**/*.styl')
+  return gulp.src('src/**/*.{styl,css}')
+    .pipe(sourcemaps.init())
     .pipe(stylus())
     .pipe(postcss([require('lost')(), require('autoprefixer')()]))
+    .pipe(sourcemaps.write('dist'))
     .pipe(gulp.dest('dist'))
     .pipe(browserSync.stream({match: '**/*.css'}));
 });
@@ -30,8 +33,21 @@ gulp.task('images', function () {
     .pipe(gulp.dest('dist/images/'));
 });
 
+gulp.task('images-watch', ['images'], browserSync.reload.bind(browserSync));
 
-gulp.task('serve', ['templates', 'css', 'images'], function () {
+
+gulp.task('js', function () {
+  var coffee = require('gulp-coffee');
+  return gulp.src('src/js/*.coffee')
+    .pipe(sourcemaps.init())
+    .pipe(coffee())
+    .pipe(sourcemaps.write('dist/js/'))
+    .pipe(gulp.dest('dist/js/'))
+    .pipe(browserSync.stream());
+});
+
+
+gulp.task('serve', ['templates', 'css', 'images', 'js'], function () {
   browserSync.init({
     server: {
       baseDir: './dist/'
@@ -41,6 +57,8 @@ gulp.task('serve', ['templates', 'css', 'images'], function () {
 
   gulp.watch('src/**/*.styl', ['css']);
   gulp.watch('src/**/*.jade', ['templates-watch']);
+  gulp.watch('src/images/*', ['images-watch']);
+  gulp.watch('src/js/*.coffee', ['js']);
 });
 
 
