@@ -1,5 +1,5 @@
 (->
-  bars = document.querySelectorAll '#jumbo .bar'
+  bars = document.querySelectorAll '#top-bars .bar'
 
   changeHeight = (i) ->
     newHeight = Math.random() * 70 + 30

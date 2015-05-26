@@ -8,10 +8,10 @@ html
     link(href='css/main.css', media='all', rel='stylesheet')
     link(href='css/normalize.css', media='all', rel='stylesheet')
   body
+    #top-bars
+      - each i in [1, 2, 3, 4]
+        .bar
     #jumbo
-      .bars
-        - each i in [1, 2, 3, 4]
-          .bar
       .content
         .logo
           div
@@ -19,9 +19,15 @@ html
             h2 Gráfica Rápida e Papelaria
         .info
           .info-content
+            .images
+              .image
+              .image
             .contact
               span.phone (12) 3522-0086
             .actions
               a.btn(href='#serviços') Veja nossos serviços
               a.btn(href='#contatos') + contatos / endereço
+
+    #servicos
+      h1 Nossos Serviços
     script(src='js/main.js')
