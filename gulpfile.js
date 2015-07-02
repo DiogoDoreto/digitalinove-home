@@ -52,7 +52,16 @@ gulp.task('js', function () {
 });
 
 
-gulp.task('serve', ['templates', 'css', 'images', 'js'], function () {
+gulp.task('static', function () {
+  return gulp.src('src/CNAME')
+    .pipe(gulp.dest('dist/'));
+});
+
+
+gulp.task('build', ['templates', 'css', 'images', 'js', 'static']);
+
+
+gulp.task('serve', ['build'], function () {
   browserSync.init({
     server: {
       baseDir: './dist/'
@@ -64,6 +73,14 @@ gulp.task('serve', ['templates', 'css', 'images', 'js'], function () {
   gulp.watch('src/**/*.jade', ['templates-watch']);
   gulp.watch('src/images/*', ['images-watch']);
   gulp.watch('src/js/*.coffee', ['js']);
+});
+
+
+gulp.task('deploy', ['build'], function() {
+  var ghPages = require('gulp-gh-pages');
+
+  return gulp.src('./dist/**/*')
+    .pipe(ghPages());
 });
 
 
